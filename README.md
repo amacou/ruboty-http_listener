@@ -16,12 +16,12 @@ And then execute:
 
 ## Usage
 
-If you wanna talk to you by ruboty
+#### If you wanna to say ruboty
 
 do the command below
 
 ```
-curl -G http://localhost:8877/ --data to='amacou' --data-urlencode body='hello あまこう' --data-urlencode from='#ruboty'
+curl -G http://localhost:8877/say --data-urlencode to='#ruboty' --data-urlencode body='hello あまこう'
 ```
 
 then
@@ -29,8 +29,21 @@ then
 ```
 ruboty > hello あまこう
 ```
+#### If you wanna message to ruboty
 
-If you wanna change listening port to 3000,
+do the command below
+
+```
+curl http://localhost:8877/message --data-urlencode from='#ruboty' --data-urlencode body='ruboty some command'
+```
+
+then
+
+```
+ruboty > command result
+```
+
+#### If you wanna change listening port to 3000,
 
 You shoud add below to .env
 
