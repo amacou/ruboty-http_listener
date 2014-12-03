@@ -7,7 +7,7 @@ This is a plugin for Ruboty to add another interface on HTTP
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ruboty-http_listener', github: amacou/ruboty-http_listener
+gem 'ruboty-http_listener', github: 'amacou/ruboty-http_listener'
 ```
 
 And then execute:
