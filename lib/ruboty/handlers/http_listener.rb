@@ -9,42 +9,23 @@ module Ruboty
       end
 
       def start
-        server = TCPServer.open(port)
-        Thread.new do
-          while true
-            Thread.start(server.accept) do |socket|
-              request = Ruboty::HttpListener::Request.new socket.gets
+        server = WEBrick::HTTPServer.new({ Port: port, Logger: Ruboty.logger })
 
-              if request && request.body
-                message.reply(request.body, request.option)
-              end
-
-              socket.write response
-              socket.close
-            end
-          end
+        server.mount_proc('/say') do |req|
+          @robot.say(req.query.symbolize_keys)
         end
-      end
 
-      def default_message
-        { from: '', to: '', robot: @robot }
+        server.mount_proc('/message') do |req|
+          @robot.receive(req.query.symbolize_keys)
+        end
+
+        Thread.new do
+          server.start
+        end
       end
 
       def port
         ENV['LISTEN_PORT'] || '8877'
-      end
-
-      def message
-        Message.new(default_message)
-      end
-
-      def response
-        <<-EOF.strip_heredoc.strip
-          HTTP/1.1 200 OK
-          Content-Type: text/plain; charset=UTF-8
-          Server: #{ @robot.name }
-          Connection: close
-        EOF
       end
     end
   end
