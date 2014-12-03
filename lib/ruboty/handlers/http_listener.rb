@@ -11,12 +11,12 @@ module Ruboty
       def start
         server = WEBrick::HTTPServer.new({ Port: port, Logger: Ruboty.logger })
 
-        server.mount_proc('/say') do |req|
-          @robot.say(req.query.symbolize_keys)
+        server.mount_proc('/say') do |request|
+          @robot.say(message_attributes(request))
         end
 
-        server.mount_proc('/message') do |req|
-          @robot.receive(req.query.symbolize_keys)
+        server.mount_proc('/message') do |request|
+          @robot.receive(request.query.symbolize_keys)
         end
 
         Thread.new do
@@ -26,6 +26,18 @@ module Ruboty
 
       def port
         ENV['LISTEN_PORT'] || '8877'
+      end
+
+      def message_attributes(request)
+        attributes = request.query.symbolize_keys
+
+        from = attributes[:from]
+        to   = attributes[:to]
+
+        attributes[:from] = to
+        attributes[:to] = from
+
+        attributes
       end
     end
   end
