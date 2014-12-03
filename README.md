@@ -16,7 +16,7 @@ And then execute:
 
 ## Usage
 
-#### If you wanna to say ruboty
+#### say
 
 do the command below
 
@@ -29,7 +29,7 @@ then
 ```
 ruboty > hello あまこう
 ```
-#### If you wanna message to ruboty
+#### message
 
 do the command below
 
@@ -43,7 +43,7 @@ then
 ruboty > command result
 ```
 
-#### If you wanna change listening port to 3000,
+#### change listening port
 
 You shoud add below to .env
 
